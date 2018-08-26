@@ -1,0 +1,771 @@
+Clients
+<template>
+  <div class="container">
+    <!--
+    <div class="text-center">
+      <Alert v-if="alert" v-bind:message="alert"/>
+    <hr> 
+    <h3 class="page-header">Clients List</h3>
+    <button v-on:click="exportPdf" class="btn btn-warning"><i class="material-icons">&#xe415;</i></button>
+    <router-link class="btn btn-primary" v-bind:to="'/upload'"><i class="material-icons">&#xe2c3;</i></router-link>
+    <router-link v-bind:to="'/pie'" class="btn btn-danger"><i class="material-icons">&#xe6c4;</i></router-link>
+    </div>
+    <hr>
+    <form>
+      <div class="form-group">
+          <input type="text" name="search" v-model="filterInput" placeholder="Search by First Name" class="form-control">
+      </div>
+    </form>
+    -->
+
+    <div class="row">
+        <div class="col">
+            <table class="gridtable">
+              <thead>
+                <tr >
+                    <th>FName</th>
+                    <th>Surname</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!--<tr v-for="client in filterBy(clients, filterInput)" :key="client.id">-->
+                  <tr v-for="client in clients" :key="client.id">
+                  <td>{{client.first_name}}</td>
+                  <td>{{client.last_name}}</td>
+                  <td>{{client.phone}}</td>
+                  <td>{{client.email}}</td>
+                  <td>{{client.address}}</td>
+                  <td>{{client.city}}</td>
+                  <td>{{client.state}}</td>
+                  <td><router-link class="btn btn-primary" v-bind:to="'/client/'+client.id"><i class="material-icons">&#xe8ef;</i></router-link></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+  </div>
+</template>
+
+<script>
+import data from '../api/data';
+//import Alert from './Alert';
+//import jsPDF from 'jspdf';
+import store from '../store/index'
+//import axios from 'axios'
+//import { store } from '../store/store'
+
+export default {
+  name: 'clients',
+
+  data() {
+    return {
+      clients: [],
+      //alert: '',
+      //filterInput: '',
+      //errmsg: "Server is turned off",
+      //validTable: false
+   }
+  },
+
+  /*created () {
+    this.$store.dispatch('getClients')
+},
+
+  computed: {
+    clients(){
+      //console.log(this.$store.state.clients);
+      return this.$store.state.clients;
+    }
+  },*/
+
+  methods: {
+    /*exportPdf(){
+      var vm = this;
+      var columns = [
+        {title: "FName", dataKey: "first_name"},
+        {title: "Surname", dataKey: "last_name"},
+        {title: "Phone", dataKey: "phone"},
+        {title: "Email", dataKey: "email"},
+        {title: "Address", dataKey: "address"},
+        {title: "City", dataKey: "city"},
+        {title: "State", dataKey: "state"}
+      ];
+      var doc = new jsPDF('p','pt');
+      doc.autoTable(columns, vm.clients);
+      doc.save('clients.pdf');
+    },*/
+
+    //vue-resource
+    /*fetchClients(){
+      this.$http.get('http://slimapp:8080/api/clients').then(function(response){
+        //console.log(response.data);
+        this.clients = response.body;
+        //console.log(this.clients.length);
+      },
+      (err) => {
+          //console.log(this.errmsg, err);
+        })
+      .catch((e) => {
+        console.log("Caught", e);
+      }
+    );
+},*/
+
+ //axios
+ /*fetchApi(){
+    axios
+      .get('http://slimapp:8080/api/clients')
+      .then(response => {
+        //console.log(response.data);
+        this.clients = response.data
+      })
+      .catch(error => {
+        //console.log(error)
+        this.errored = true
+      })
+  },*/
+
+    /*filterBy(list, value){
+      value = value.charAt(0).toUpperCase() + value.slice(1);
+      return list.filter(function(client){
+        return client.first_name.indexOf(value) > -1;
+
+      })
+    }*/
+  },
+  created: function(){
+    /*if(this.$route.query.alert){
+      this.alert = this.$route.query.alert;
+    }*/
+    this.clients = data.getClients();
+    //store.dispatch('getClients');
+    //this.fetchClients();
+    //this.fetchApi();
+  },
+  /*updated: function(){
+    //this.fetchClients();
+    //this.fetchApi();
+  },*/
+  /*components: {
+    Alert
+  }*/
+}
+</script>
+
+<style scoped>
+.btn{
+    color: white;
+    font-weight: bold;
+    width: 95px;
+}
+
+.container{
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.row{
+    margin:0 auto; 
+    width: 100%;
+    overflow: auto; }
+    
+    table.gridtable {    
+    margin:0 auto;
+    overflow: auto;         
+    width:90%;        
+    font-size:14px;
+    font-weight: bold;         
+    color:#000000;         
+    border-width: 1px;         
+    border-color: black;         
+    border-collapse: collapse;         
+    text-align: left;    }
+    
+     table.gridtable th {         
+     border-width: 1px;
+     color: navy;
+     text-decoration: underline;
+     padding: 8px;
+     font-weight: bold;          
+     border-style: solid;         
+     border-color: #ffffff;         
+     background-color: #ffffff;     }     
+     
+     table.gridtable td {         
+     border-width: 1px;         
+     padding: 8px;
+     font-weight: bold;        
+     border-style: solid; 
+     border-color: #ffffff;        
+     background-color: #ffffff;     }
+     
+     @media only screen and (min-width : 768px)  and (max-width : 1024px) {     
+     #row{ width:100%; }  
+     table.gridtable {           
+     width:100%;
+     font-weight: bold;           
+     font-size:13px; } 
+     table.gridtable th {           
+     background-color: #ffffff; } }
+     
+     @media only screen and (min-width : 569px)  and (max-width : 767px) {     
+     #row{ width:100%; }  
+     table.gridtable {           
+     width:100%;
+     font-weight: bold;           
+     font-size:12px; } 
+     table.gridtable th {           
+     background-color: #ffffff; } }
+     
+     @media only screen and (min-width : 240px)  and (max-width : 568px) {     
+     #row{ width:100%; }  
+     table.gridtable {           
+     width:100%; } 
+     table thead {           
+     display: none; } 
+     table tr {           
+     display: block;           
+     margin-top: 5px;           
+     padding-bottom:5px;           
+     border-bottom: 2px solid black; } 
+     table td {           
+     display: block;
+     text-align: right;           
+     font-size: 13px;           
+     border-radius:5px;           
+     margin-bottom:1px;           
+     min-height: 14px;         
+     }
+    table td:before {           
+    content: attr(colname);           
+    float: left;
+    color: black;           
+    font-weight: bold;         
+	} }
+
+</style>
+ 2. require("dotenv").config();
+
+//import Vue from 'vue'
+import Vue from 'vue/dist/vue.js';
+import router from './router'
+import firebase from 'firebase'
+import App from './App'
+import store from './store'
+import data from './api/data'
+import Vuetify from 'vuetify'
+ 
+Vue.use(Vuetify)
+import "chart.js";
+import "hchs-vue-charts";
+Vue.use(window.VueCharts);
+
+import * as VueGoogleMaps from "vue2-google-maps";
+Vue.use(VueGoogleMaps, {
+  load: { key: "AIzaSyApFgcT90LEhZKr6o3mAH1H8CoroRmieRE" }
+});
+
+import VueCarousel from 'vue-carousel';
+Vue.use(VueCarousel);
+
+//import axios from 'axios';
+//import VueAxios from 'axios';
+//Vue.use(axios);
+
+Vue.config.productionTip = false
+
+var jsPDF = require('jspdf');
+require('jspdf-autotable');
+
+let app;
+var config = {
+    apiKey: "AIzaSyBbKqidWrdp_CCnDP3leeC9d2C9v8Ij7Eo",
+    authDomain: "vprj-ced3d.firebaseapp.com",
+    databaseURL: "https://vprj-ced3d.firebaseio.com",
+    projectId: "vprj-ced3d",
+    storageBucket: "vprj-ced3d.appspot.com",
+    messagingSenderId: "1022732389166"
+};
+
+firebase.initializeApp(config);
+
+window.firebase=firebase;
+
+firebase.auth().onAuthStateChanged((user)=>{
+  if(!app){
+    app= new Vue({
+      store: store,
+      el: '#app',
+      router,
+      components: { App },
+      template: '<App/>'
+    }).$mount('#app');
+  }
+});
+
+3. import Vuex from 'vuex';
+import Vue from 'vue/dist/vue.js';
+
+Vue.use(Vuex)
+
+import data from '../api/data';
+
+//export default new Vuex.Store({
+    const store = new Vuex.Store({
+    state: {
+        clients: []
+    },
+    getters: {
+
+    },
+    actions: {
+        getClients(context){
+            context.commit('setClients')
+        }
+    },
+    mutations: {
+        setClients(state){
+            //console.log(data);
+            state.clients = data.getClients()
+            console.log(data.getClients);
+        }
+    }
+})
+
+4. //import Vue from 'vue'
+import Vue from 'vue/dist/vue.js';
+import Router from 'vue-router'
+import vueResource from 'vue-resource'
+import axios from 'axios'
+import About from '@/components/About'
+import Clients from '@/components/Clients'
+import Add from '@/components/Add'
+import Cdetails from '@/components/Cdetails'
+import Edit from '@/components/Edit'
+import Home from '@/components/Home'
+import Signin from '@/components/Signin'
+import Signup from '@/components/Signup'
+import Uploadfile from '@/components/Uploadfile'
+import ChartPie from '@/components/ChartPie'
+import Gmap from '@/components/Gmap'
+import Slct from '@/components/Slct'
+
+window.axios = axios //g
+//Vue.use(axios)
+Vue.use(vueResource)
+Vue.use(Router)
+
+export default new Router({
+  routes: [
+    {
+      path: '/',
+      name: 'Home',
+      component: Home
+    },
+    {
+      path: '/clients',
+      name: 'Clients',
+      component: Clients
+    },
+    {
+      path: '/about',
+      name: 'About',
+      component: About
+    },
+    {
+      path: '/add',
+      name: 'Add',
+      component: Add
+    },
+    {
+      path: '/client/:id',
+      name: 'Cdetails',
+      props: true,
+      component: Cdetails
+    },
+    {
+      path: '/edit/:id',
+      name: 'Edit',
+      props: true,
+      component: Edit
+    },
+    {
+      path: '/signin',
+      name: 'Signin',
+      component: Signin
+    },
+    {
+      path: '/signup',
+      name: 'Signup',
+      component: Signup
+    },
+    {
+      path: '/upload',
+      name: 'Uploadfile',
+      component: Uploadfile
+    },
+    {
+      path: '/pie',
+      name: 'ChartPie',
+      component: ChartPie
+    },
+    {
+      path: '/gmap',
+      name: 'Gmap',
+      component: Gmap
+    },
+    {
+      path: '/slct',
+      name: 'Slct',
+      component: Slct
+    }
+  ]
+})
+
+5. const clients = [
+    {
+        'id' : 1,
+        'first_name' : 'Iron',
+        'last_name' : 'Sh',
+        'phone' : '012345',
+        'email' : '25 Hill',
+        'address' : 'Sh',
+        'city' : 'Hash',
+        'state' : 'NSW',
+    },
+    {
+        'id' : 2,
+        'first_name' : 'Ironx',
+        'last_name' : 'Shz',
+        'phone' : '012346',
+        'email' : '27 Hill',
+        'address' : 'Gh',
+        'city' : 'Mash',
+        'state' : 'NSW',
+    }
+]
+
+export default{
+    getClients(){
+        return clients;
+    }
+}
+
+6. import { Component, Input,OnInit,trigger,state,style,transition,animate,keyframes,group,AfterViewInit, AfterViewChecked, Pipe, PipeTransform, Output, EventEmitter,} from '@angular/core';
+import {PostsService3} from '../services/posts.service3';
+import {HttpModule, Http} from '@angular/http';
+
+@Component({
+  selector: 'headtohead',  
+  templateUrl: `app/components/headtohead.component.html`,
+  styleUrls: [`app/components/headtohead.component.css`],
+  providers: [PostsService3, HttpModule],
+})
+
+export class HeadtoheadComponent implements OnInit, AfterViewInit{
+  @Output() notify: EventEmitter<string> = new EventEmitter<string>();
+  title: string;
+  title1: string;
+  title2: string;
+  title3: string;
+  title4: string;
+  title5: string;
+  title6: string;
+  title7: string;
+  title8: string;
+  title9: string;
+  title10: string;
+  choices: string[];
+  showChoices: boolean;
+  showMores: boolean;
+  showMores1: boolean;
+  showMores2: boolean;
+  showMores3: boolean;
+  showMores4: boolean;
+  showMores5: boolean;
+  showMores6: boolean;
+  showMores7: boolean;
+  showMores8: boolean;
+  showMores9: boolean;
+  showMores10: boolean;
+  showMores11: boolean;
+  showMores12: boolean;
+  showMores13: boolean;
+  showMores14: boolean;
+  showMores15: boolean;
+  showMores16: boolean;
+  showMores17: boolean;
+  showMores18: boolean;
+  showMores19: boolean;
+  showDiv: boolean;
+  anyteams: string[];
+  posts : any;
+  fixtures:any =[];
+
+  opponent: string;
+  team : string;
+  id : number;
+
+constructor(private postsService: PostsService3){
+    this.title = 'Fixtures';
+    this.title1 = 'Results';
+    this.title2 = 'Table';
+    this.title3 = 'My Team';
+    this.title4 = 'Players';
+    this.title5 = 'HeadToHead';
+    this.title6 = 'Upcoming';
+    this.title7 = 'Finished';
+    this.title8 = 'WinningList';
+    this.title9 = 'About';
+    this.title10 = 'About the Premier League';
+    this.id = 66;
+    this.choices = ['Arsenal FC', 'AFC Bournemouth', 'Burnley FC', 'Chelsea FC', 'Crystal Palace FC', 'Everton FC', 'Hull City FC', 'Leicester City FC', 'Liverpool FC', 'Manchester City FC', 'Manchester United FC', 'Middlesbrough FC', 'Southampton FC', 'Stoke City FC', 'Sunderland AFC', 'Swansea City FC', 'Tottenham Hotspur FC', 'Watford FC', 'West Bromwich Albion FC', 'West Ham United FC'];
+    this.showChoices = false;
+    this.showMores = false;
+    this.showMores1 = false;
+    this.showMores2 = false;
+    this.showMores3 = false;
+    this.showMores4 = false;
+    this.showMores5 = false;
+    this.showMores6 = false;
+    this.showMores7 = false;
+    this.showMores8 = false;
+    this.showMores9 = false;
+    this.showMores10 = false;
+    this.showMores11 = false;
+    this.showMores12 = false;
+    this.showMores13 = false;
+    this.showMores14 = false;
+    this.showMores15 = false;
+    this.showMores16 = false;
+    this.showMores17 = false;
+    this.showMores18 = false;
+    this.showMores19 = false;
+	this.showDiv = true;
+}
+
+ngOnInit(){
+		this.postsService.getPosts(this.id).subscribe(posts => {
+		this.posts = posts;
+        this.fixtures = posts.fixtures;
+		console.log(this.fixtures);
+	});
+}
+
+ngAfterViewInit(){
+	console.log("In Content init " + this.posts);
+}
+
+teamchoose(team: string): void
+  {
+     this.team = team;
+     
+     switch(this.team){
+         case "Manchester United FC" : this.id = 66;
+                                    break;
+         case "Manchester City FC" : this.id = 65;
+                                  break;
+         case "Middlesbrough FC" : this.id = 343;
+                                    break;
+         case "Liverpool FC" : this.id = 64;
+                                  break;
+         case "Chelsea FC" : this.id = 61;
+                                    break;
+         case "Crystal Palace FC" : this.id = 354;
+                                  break;
+         case "Everton FC" : this.id = 62;
+                                    break;
+         case "Arsenal FC" : this.id = 57;
+                                  break;
+         case "AFC Bournemouth" : this.id = 1044;
+                                    break;
+         case "Hull City FC" : this.id = 322;
+                                  break;
+         case "Burnley FC" : this.id = 328;
+                                    break;
+         case "Leicester City FC" : this.id = 338;
+                                  break;
+         case "Southampton FC" : this.id = 340;
+                                    break;
+         case "Stoke City FC" : this.id = 70;
+                                  break;
+         case "Sunderland AFC" : this.id = 71;
+                                    break;
+         case "Swansea City FC" : this.id = 72;
+                                  break;
+         case "Tottenham Hotspur FC" : this.id = 73;
+                                    break;
+         case "Watford FC" : this.id = 346;
+                                  break;
+         case "West Bromwich Albion FC" : this.id = 74;
+                                    break;
+         case "West Ham United FC" : this.id = 563;
+                                  break;
+     }
+     console.log ("team == " + this.id )
+     this.ngOnInit();
+  }
+
+  opponentTeam(opponent: string): void
+  {
+     this.opponent = opponent;
+     console.log("opponent == " + opponent );
+     this.ngOnInit();
+  }
+
+toggleChoices(){
+      this.showChoices = !this.showChoices;
+  }
+
+closeChoices(){
+      this.showChoices = this.showChoices;
+  }
+
+toggleMores(){
+      this.showMores = !this.showMores;
+  }
+
+closeMores(){
+      this.showMores = this.showMores;
+  }
+
+toggleMores1(){
+      this.showMores1 = !this.showMores1;
+  }
+
+closeMores1(){
+      this.showMores1 = this.showMores1;
+  }
+
+  toggleMores2(){
+      this.showMores2 = !this.showMores2;
+  }
+
+closeMores2(){
+      this.showMores2 = this.showMores2;
+  }
+
+  toggleMores3(){
+      this.showMores3 = !this.showMores3;
+  }
+
+closeMores3(){
+      this.showMores3 = this.showMores3;
+  }
+}
+
+interface Post{
+    fixture: string;
+}
+
+7. <div class = "container">
+<div class = "paragraph1">
+		<div id = "paragraph1_part1"><img src="SQhYAREz_400x400.jpg" alt="HTML5 Icon" onmouseover="this.src= 'SQhYAREz_400x400.jpg'" onmouseout="this.src= 'apple-touch-icon.png'"style="width:200px;height:200px;"></div>
+		<div id = "paragraph1_part2"><h1><img src="Premier_League_Logo.svg.png" style="width:30%;height:30%;"/></h1></div>
+</div>
+
+<div class = "paragraph2">
+		<div id = "paragraph2_part1"><B><img src="007725-glossy-black-3d-button-icon-arrows-arrow-solid-up.png" style="width:5%;height:5%;"/>&nbsp;Choose Team 1</B></div>
+		<div id = "paragraph2_part2">
+		<br><br>
+		<button on-click="teamchoose('Arsenal FC')"><a><img src="http://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="teamchoose('AFC Bournemouth')"><a><img src="https://upload.wikimedia.org/wikipedia/de/4/41/Afc_bournemouth.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="teamchoose('Burnley FC')"><a><img src="https://upload.wikimedia.org/wikipedia/en/0/02/Burnley_FC_badge.png" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="teamchoose('Chelsea FC')"><a><img src="https://upload.wikimedia.org/wikipedia/de/5/5c/Chelsea_crest.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+        <button on-click="teamchoose('Crystal Palace FC')"><a><img src="http://upload.wikimedia.org/wikipedia/de/b/bf/Crystal_Palace_F.C._logo_(2013).png" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button><br>
+		<button on-click="teamchoose('Everton FC')"><a><img src="http://upload.wikimedia.org/wikipedia/de/f/f9/Everton_FC.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="teamchoose('Hull City FC')"><a><img src="http://upload.wikimedia.org/wikipedia/de/a/a9/Hull_City_AFC.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="teamchoose('Leicester City FC')"><a><img src="http://upload.wikimedia.org/wikipedia/en/6/63/Leicester02.png" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="teamchoose('Liverpool FC')"><a><img src="http://upload.wikimedia.org/wikipedia/de/0/0a/FC_Liverpool.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="teamchoose('Manchester City FC')"><a><img src="https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button><br>
+		<button on-click="teamchoose('Manchester United FC')"><a><img src="http://upload.wikimedia.org/wikipedia/de/d/da/Manchester_United_FC.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="teamchoose('Middlesbrough FC')"><a><img src="https://upload.wikimedia.org/wikipedia/en/2/2c/Middlesbrough_FC_crest.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="teamchoose('Southampton FC')"><a><img src="http://upload.wikimedia.org/wikipedia/de/c/c9/FC_Southampton.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="teamchoose('Stoke City FC')"><a><img src="http://upload.wikimedia.org/wikipedia/de/a/a3/Stoke_City.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="teamchoose('Sunderland AFC')"><a><img src="http://upload.wikimedia.org/wikipedia/de/6/60/AFC_Sunderland.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button><br>
+		<button on-click="teamchoose('Swansea City FC')"><a><img src="http://upload.wikimedia.org/wikipedia/de/a/ab/Swansea_City_Logo.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="teamchoose('Tottenham Hotspur FC')"><a><img src="http://upload.wikimedia.org/wikipedia/de/b/b4/Tottenham_Hotspur.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="teamchoose('Watford FC')"><a><img src="https://upload.wikimedia.org/wikipedia/en/e/e2/Watford.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="teamchoose('West Bromwich Albion FC')"><a><img src="http://upload.wikimedia.org/wikipedia/de/8/8b/West_Bromwich_Albion.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="teamchoose('West Ham United FC')"><a><img src="http://upload.wikimedia.org/wikipedia/de/e/e0/West_Ham_United_FC.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		</div>
+		<div id = "paragraph2_part3"><B><img src="007725-glossy-black-3d-button-icon-arrows-arrow-solid-up.png" style="width:6.15%;height:6.15%;"/>&nbsp;Choose Team 2</B></div>
+		<div id = "paragraph2_part4">
+		<br><br>
+		<button on-click="opponentTeam('Arsenal FC')"><a><img src="http://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="opponentTeam('AFC Bournemouth')"><a><img src="https://upload.wikimedia.org/wikipedia/de/4/41/Afc_bournemouth.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="opponentTeam('Burnley FC')"><a><img src="https://upload.wikimedia.org/wikipedia/en/0/02/Burnley_FC_badge.png" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="opponentTeam('Chelsea FC')"><a><img src="https://upload.wikimedia.org/wikipedia/de/5/5c/Chelsea_crest.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+        <button on-click="opponentTeam('Crystal Palace FC')"><a><img src="http://upload.wikimedia.org/wikipedia/de/b/bf/Crystal_Palace_F.C._logo_(2013).png" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button><br>
+		<button on-click="opponentTeam('Everton FC')"><a><img src="http://upload.wikimedia.org/wikipedia/de/f/f9/Everton_FC.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="opponentTeam('Hull City FC')"><a><img src="http://upload.wikimedia.org/wikipedia/de/a/a9/Hull_City_AFC.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="opponentTeam('Leicester City FC')"><a><img src="http://upload.wikimedia.org/wikipedia/en/6/63/Leicester02.png" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="opponentTeam('Liverpool FC')"><a><img src="http://upload.wikimedia.org/wikipedia/de/0/0a/FC_Liverpool.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="opponentTeam('Manchester City FC')"><a><img src="https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a><br></button>
+		<button on-click="opponentTeam('Manchester United FC')"><a><img src="http://upload.wikimedia.org/wikipedia/de/d/da/Manchester_United_FC.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="opponentTeam('Middlesbrough FC')"><a><img src="https://upload.wikimedia.org/wikipedia/en/2/2c/Middlesbrough_FC_crest.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="opponentTeam('Southampton FC')"><a><img src="http://upload.wikimedia.org/wikipedia/de/c/c9/FC_Southampton.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="opponentTeam('Stoke City FC')"><a><img src="http://upload.wikimedia.org/wikipedia/de/a/a3/Stoke_City.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="opponentTeam('Sunderland AFC')"><a><img src="http://upload.wikimedia.org/wikipedia/de/6/60/AFC_Sunderland.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button><br>
+		<button on-click="opponentTeam('Swansea City FC')"><a><img src="http://upload.wikimedia.org/wikipedia/de/a/ab/Swansea_City_Logo.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="opponentTeam('Tottenham Hotspur FC')"><a><img src="http://upload.wikimedia.org/wikipedia/de/b/b4/Tottenham_Hotspur.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="opponentTeam('Watford FC')"><a><img src="https://upload.wikimedia.org/wikipedia/en/e/e2/Watford.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="opponentTeam('West Bromwich Albion FC')"><a><img src="http://upload.wikimedia.org/wikipedia/de/8/8b/West_Bromwich_Albion.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		<button on-click="opponentTeam('West Ham United FC')"><a><img src="http://upload.wikimedia.org/wikipedia/de/e/e0/West_Ham_United_FC.svg" alt="HTML5 Icon" style="width:100px;height:80px;" onmouseover="this.style='width:140px;height:90px;'" onmouseout="this.style='width:100px;height:80px;'"></a></button>
+		</div>
+</div>
+
+<div class = "paragraph3">
+<div id = "effect_mouse" on-click="toggleChoices()" on-click="closeChoices()" style="cursor:pointer;"><strong>{{showChoices ? "Hide" : "CLUBS"}}</strong></div>
+    <div *ngIf="showChoices">
+	<h4></h4>
+        <ul>
+            <li id = "list" *ngFor="let choice of choices"><small>{{choice}}</small></li>
+        </ul>
+    </div>
+<div id = "extended"></div>
+</div>
+
+<div class = "paragraph4">
+    <div id = "paragraph4_part1"><B><img src="RTGyXKL8c.gif" style="width:10%;height:15%;"/>&nbsp;<a routerLink="/fixtures">{{title}}</a></B></div>
+	<div id = "paragraph4_part2"><B><img src="RTGyXKL8c.gif" style="width:10%;height:15%;"/>&nbsp;<a routerLink="/results">{{title1}}</a></B></div>
+	<div id = "paragraph4_part3"><B><img src="RTGyXKL8c.gif" style="width:10%;height:15%;"/>&nbsp;<a routerLink="/">{{title2}}</a></B></div>
+    <div id = "paragraph4_part4"><B><img src="RTGyXKL8c.gif" style="width:10%;height:15%;"/>&nbsp;<a routerLink="/myteam">{{title3}}</a></B></div>
+	<div id = "paragraph4_part5"><B><img src="RTGyXKL8c.gif" style="width:10%;height:15%;"/>&nbsp;<a routerLink="/players">{{title4}}</a></B></div>
+	<div id = "paragraph4_part6"><B><img src="RTGyXKL8c.gif" style="width:10%;height:15%;"/>&nbsp;<a routerLink="/headtohead">{{title5}}</a></B></div>
+    <div id = "paragraph4_part7"><B><img src="RTGyXKL8c.gif" style="width:10%;height:15%;"/>&nbsp;<a routerLink="/upcoming">{{title6}}</a></B></div>
+    <div id = "paragraph4_part8"><B><img src="RTGyXKL8c.gif" style="width:10%;height:15%;"/>&nbsp;<a routerLink="/finishedgames">{{title7}}</a></B></div>
+    <div id = "paragraph4_part9"><B><img src="RTGyXKL8c.gif" style="width:10%;height:15%;"/>&nbsp;<a routerLink="/winning">{{title8}}</a></B></div>
+</div>
+
+<div class = "paragraph5">
+<div id = "effect" on-click="toggleMores()" on-click="closeMores()" style="cursor:pointer;">
+<strong>{{showMores ? "Hide" : "Click Here"}}</strong>
+</div>
+</div>
+
+<div class = "paragraph5a">
+<div *ngIf="showMores">
+<div *ngFor="let post of fixtures">
+<template [ngIf]="post.homeTeamName == team && post.awayTeamName == opponent || post.homeTeamName == opponent && post.awayTeamName == team">
+{{post.date | date:'shortDate'}}&nbsp;<B>{{post.homeTeamName}} &nbsp; {{post.result.goalsHomeTeam}}&nbsp; : &nbsp;{{post.result.goalsAwayTeam}} &nbsp; {{post.awayTeamName}}</B>
+</template>
+</div>
+</div>
+</div>
+
+<div class = "paragraph6"></div>
+
+<div class = "paragraph7">
+		<a routerLink="/fixtures"><B>&nbsp;{{title}}</B></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a routerLink="/players"><B>{{title4}}</B></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a routerLink="/winning"><B>{{title8}}</B></a><br>
+		<a routerLink="/results"><B>&nbsp;{{title1}}</B></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a routerLink="/headtohead"><B>{{title5}}</B></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a routerLink="/about"><B>{{title9}}</B></a><br>
+		<a routerLink="/"><B>&nbsp;{{title2}}</B></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a routerLink="/upcoming"><B>{{title6}}</B></a><br>
+		<a routerLink="/myteam"><B>&nbsp;{{title3}}</B></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a routerLink="/finishedgames"><B>{{title7}}</B></a>
+</div>
+</div>
