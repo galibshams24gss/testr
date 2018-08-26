@@ -769,3 +769,15 @@ interface Post{
 		<a routerLink="/myteam"><B>&nbsp;{{title3}}</B></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a routerLink="/finishedgames"><B>{{title7}}</B></a>
 </div>
 </div>
+
+8. high chart
+https://www.highcharts.com/demo/line-basic
+https://www.highcharts.com/blog/tutorials/highcharts-vue-wrapper/
+https://github.com/highcharts/highcharts-vue/blob/master/demo/src/App.vue
+https://www.npmjs.com/package/vue2-highcharts
+v-bind:to="'/pie'"
+
+axios
+https://vuejs.org/v2/cookbook/using-axios-to-consume-apis.html
+
+https://www.reddit.com/r/vuejs/comments/5moay9/any_simple_examples_using_axios_with_vuex_for/
